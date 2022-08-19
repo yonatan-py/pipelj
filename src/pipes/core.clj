@@ -10,5 +10,6 @@
 
 (defmacro pipe [& forms]
   ; TODO: validate
-  (let [actual-forms (take-nth 2 forms)]
-    (pipe* 'nil actual-forms)))
+  (let [actual-forms (take-nth 2 forms)
+        [initial-function & functions] actual-forms]
+    (pipe* (list initial-function) functions)))

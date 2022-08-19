@@ -4,6 +4,8 @@
 
 (fact
   (pipe
-    (fn [_nil] "foo") | (fn [data]
-                          (println "first function:" data)
-                          (str data data)) | #(clojure.string/capitalize %)) => "Foofoo")
+    (fn [] "foo") |
+    #(str % %) |
+    #(clojure.string/capitalize %))
+  =>
+  "Foofoo")
