@@ -35,6 +35,14 @@
           (str/starts-with? "Syntax error macroexpanding pipe at")))) ; "even forms should be pipes (|)"
   => true)
 
+(fact "single | form"
+      (try
+        (macroexpand '(pipe |))
+        (catch Exception exception
+          (-> exception
+              str
+              (str/starts-with? "Syntax error macroexpanding pipe at")))))
+
 (fact "test form only"
   (let [f1 (fn [])
         f2 (fn [])
@@ -44,3 +52,4 @@
 (fact "single form"
       (let [f1 (fn [])]
         (macroexpand '(pipe f1))))
+
