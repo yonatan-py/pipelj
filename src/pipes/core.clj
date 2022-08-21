@@ -9,7 +9,13 @@
 
 
 (defmacro pipe [& forms]
-  ; TODO: validate
   (let [actual-forms (take-nth 2 forms)
+        pipes (->> forms (rest) (take-nth 2))
         [initial-function & functions] actual-forms]
+    (if (even? (count forms))
+      (throw (IllegalArgumentException.
+               "pipe requires an odd number of forms")))
+    (if (some #(-> % str (not= "|")) pipes)
+      (throw (IllegalArgumentException.
+               "event forms should be pipes (|)")))
     (pipe* (list initial-function) functions)))
